@@ -224,10 +224,11 @@ class Products {
 				<span class="woocommerce-help-tip"
 				      data-tip="<?php echo esc_attr_e( 'Enable to sell this product on Instagram. Products that are hidden in the Facebook catalog can be synced, but won’t be available for purchase.', 'facebook-for-woocommerce' ); ?>"></span>
 			</label>
+			<input type="hidden" name="<?php echo esc_attr( self::FIELD_COMMERCE_ENABLED ); ?>" value="no" />
 			<input type="checkbox" class="enable-if-sync-enabled"
 			       name="<?php echo esc_attr( self::FIELD_COMMERCE_ENABLED ); ?>"
 			       id="<?php echo esc_attr( self::FIELD_COMMERCE_ENABLED ); ?>" value="yes"
-			       checked="<?php echo Products_Handler::is_commerce_enabled_for_product( $product ) ? 'checked' : ''; ?>">
+			       <?php checked( Products_Handler::is_commerce_enabled_for_product( $product ) ); ?> />
 		</p>
 
 		<div id="product-not-ready-notice" style="display:none;">
