@@ -9,12 +9,11 @@
 	margin-bottom: 20px;
 }
 
-#wc-facebook-connection-box .logo {
-	width: 40px;
-	height: 40px;
-	background-image: url( '../../images/logo.png' );
-	background-size: 100%;
-	margin-bottom: 10px;
+#wc-facebook-connection-box.is-connected {
+	background: white;
+	max-height: 500px;
+	max-width: 1000px;
+	width: 100%;
 }
 
 #wc-facebook-connection-box h1 {
