@@ -1385,7 +1385,7 @@ class WC_Facebookcommerce_Integration extends WC_Integration {
 		if ( $woo_default_variation ) {
 			$default_product_fbid = $this->get_product_fbid(
 				self::FB_PRODUCT_ITEM_ID,
-				$woo_default_variation->get_id(),
+				$woo_default_variation['variation_id'],
 				$woo_default_variation
 			);
 		}
@@ -1420,10 +1420,12 @@ class WC_Facebookcommerce_Integration extends WC_Integration {
 	/**
 	 * Determines if there a matching variation for the default attributes.
 	 *
+	 * @since 2.0.6-dev.1
+	 *
 	 * @param \WC_Facebook_Product $woo_product
-	 * @return \WC_Product_Variation|null
+	 * @return array|null
 	 */
-	protected function get_product_group_default_variation( $woo_product ) {
+	private function get_product_group_default_variation( $woo_product ) {
 
 		$default_attributes = $woo_product->woo_product->get_default_attributes( 'edit' );
 
@@ -1432,12 +1434,11 @@ class WC_Facebookcommerce_Integration extends WC_Integration {
 		}
 
 		$default_variation  = null;
-		$product_variations = $woo_product->woo_product->get_available_variations( 'objects' );
+		$product_variations = $woo_product->woo_product->get_available_variations();
 
-		/* @var $variation \WC_Product_Variation */
 		foreach ( $product_variations as $variation ) {
 
-			$variation_attributes = $variation->get_attributes( 'edit' );
+			$variation_attributes = $this->get_product_variation_attributes( $variation );
 
 			$matching_attributes = array_intersect_assoc( $default_attributes, $variation_attributes );
 
@@ -1449,6 +1450,28 @@ class WC_Facebookcommerce_Integration extends WC_Integration {
 
 		return $default_variation;
 	}
+
+
+	/**
+	 * Parses given product variation for it's attributes
+	 *
+	 * @since 2.0.6-dev.1
+	 *
+	 * @param array $variation
+	 * @return array
+	 */
+	private function get_product_variation_attributes( $variation ) {
+
+		$final_attributes     = [];
+		$variation_attributes = $variation['attributes'];
+
+		foreach ( $variation_attributes as $attribute_name => $attribute_value ) {
+			$final_attributes[ str_replace( 'attribute_', '', $attribute_name ) ] = $attribute_value;
+		}
+
+		return $final_attributes;
+	}
+
 
 	/**
 	 * Update existing product
