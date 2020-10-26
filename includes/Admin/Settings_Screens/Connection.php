@@ -102,6 +102,19 @@ class Connection extends Admin\Abstract_Settings_Screen {
 
 
 	/**
+	 * Outputs the Facebook SDK script asynchronously.
+	 *
+	 * @since 2.1.0-dev.1
+	 */
+	private function output_facebook_connect_sdk() {
+
+		?>
+		<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+		<?php
+	}
+
+
+	/**
 	 * Enqueue the assets.
 	 *
 	 * @internal
@@ -135,6 +148,7 @@ class Connection extends Admin\Abstract_Settings_Screen {
 			return;
 		}
 
+		$this->output_facebook_connect_sdk();
 		$this->render_facebook_lwi_ads_box();
 
 		/**
