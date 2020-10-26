@@ -50,7 +50,7 @@ class Commerce extends Admin\Abstract_Settings_Screen {
 	 */
 	public function enqueue_assets() {
 
-		if ( Admin\Settings::PAGE_ID !== Framework\SV_WC_Helper::get_requested_value( 'page' ) || ( self::ID !== Framework\SV_WC_Helper::get_requested_value( 'tab' ) ) ) {
+		if ( ! $this->is_current_screen() ) {
 			return;
 		}
 
