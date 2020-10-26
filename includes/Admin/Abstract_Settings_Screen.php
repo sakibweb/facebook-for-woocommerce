@@ -10,6 +10,7 @@
 
 namespace SkyVerge\WooCommerce\Facebook\Admin;
 
+use SkyVerge\WooCommerce\Facebook\Admin\Settings_Screens\Connection;
 use SkyVerge\WooCommerce\PluginFramework\v5_9_0 as Framework;
 
 defined( 'ABSPATH' ) or exit;
@@ -106,7 +107,7 @@ abstract class Abstract_Settings_Screen {
 
 		$tab = Framework\SV_WC_Helper::get_requested_value( 'tab' );
 
-		return ! empty( $tab ) && $tab === $this->get_id();
+		return ( empty( $tab ) && Connection::ID === $this->get_id() ) || ( ! empty( $tab ) && $tab === $this->get_id() );
 	}
 
 
