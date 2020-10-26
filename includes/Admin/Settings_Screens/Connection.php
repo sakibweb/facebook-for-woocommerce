@@ -13,7 +13,7 @@ namespace SkyVerge\WooCommerce\Facebook\Admin\Settings_Screens;
 defined( 'ABSPATH' ) or exit;
 
 use SkyVerge\WooCommerce\Facebook\Admin;
-use SkyVerge\WooCommerce\PluginFramework\v5_9_0\SV_WC_API_Exception;
+use SkyVerge\WooCommerce\PluginFramework\v5_9_0 as Framework;
 
 /**
  * The Connection settings screen object.
@@ -187,7 +187,7 @@ class Connection extends Admin\Abstract_Settings_Screen {
 					$static_items['catalog']['value'] = $name;
 				}
 
-			} catch ( SV_WC_API_Exception $exception ) {}
+			} catch ( Framework\SV_WC_API_Exception $exception ) {}
 		}
 
 		// if the business manager ID is set, try and get its name for display
@@ -205,7 +205,7 @@ class Connection extends Admin\Abstract_Settings_Screen {
 					$static_items['business-manager']['url'] = $url;
 				}
 
-			} catch ( SV_WC_API_Exception $exception ) {}
+			} catch ( Framework\SV_WC_API_Exception $exception ) {}
 		}
 
 		?>
