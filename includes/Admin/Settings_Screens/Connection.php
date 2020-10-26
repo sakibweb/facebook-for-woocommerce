@@ -135,6 +135,8 @@ class Connection extends Admin\Abstract_Settings_Screen {
 			return;
 		}
 
+		$this->render_facebook_lwi_ads_box();
+
 		/**
 		 * Build the basic static elements.
 		 *
@@ -362,6 +364,51 @@ class Connection extends Admin\Abstract_Settings_Screen {
 
 		</div>
 
+		<?php
+	}
+
+
+	/**
+	 * Renders the Facebook LWI Ads box.
+	 *
+	 * @since 2.1.0-dev.1
+	 */
+	private function render_facebook_lwi_ads_box() {
+
+		$connection_handler = facebook_for_woocommerce()->get_connection_handler();
+
+		if ( ! $connection_handler || !$connection_handler->is_connected() ) {
+			return;
+		}
+
+		$fbe_extras = wp_json_encode( [
+			'business_config' => [
+				'business' => [
+					'name' => $connection_handler->get_business_name(),
+				],
+			],
+			'setup'           => [
+				'external_business_id' => $connection_handler->get_external_business_id(),
+				'timezone' => wc_timezone_string(),
+				'currency' => get_woocommerce_currency(),
+				'business_vertical' => 'ECOMMERCE'
+			],
+			'repeat'          => false,
+		] );
+
+		?>
+		<div
+			class="fb-lwi-ads-creation"
+			data-fbe-extras="<?php echo esc_attr( $fbe_extras ); ?>"
+			data-fbe-scopes="manage_business_extension, catalog_management"
+			data-fbe-redirect-uri="https://mariner9.s3.amazonaws.com/">
+		</div>
+		<div
+			class="fb-lwi-ads-insights"
+			data-fbe-extras="<?php echo esc_attr( $fbe_extras ); ?>"
+			data-fbe-scopes="manage_business_extension, catalog_management"
+			data-fbe-redirect-uri="https://mariner9.s3.amazonaws.com/">
+		</div>
 		<?php
 	}
 
